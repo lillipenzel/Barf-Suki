@@ -1,148 +1,524 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f5f1e9">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Aussie BARF">
-<title>Aussie BARF-Dashboard</title>
-<style>
-:root{--bg:#f5f1e9;--card:#fffdf9;--ink:#302d28;--muted:#827b70;--line:#e8e0d4;--gold:#b39a70;--green:#536b52;--soft:#f0ebe1}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-main{max-width:520px;margin:0 auto;padding:24px 18px 42px}
-header{display:flex;justify-content:space-between;align-items:center;margin:6px 2px 22px}
-.kicker{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
-h1{font-size:25px;line-height:1.15;margin:5px 0 0;font-weight:700;letter-spacing:-.04em}
-.pill{border:1px solid var(--line);border-radius:99px;padding:7px 11px;font-size:11px;color:var(--green);background:#f9f7f1;font-weight:700}
-.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:19px;margin:13px 0;box-shadow:0 5px 18px #59452a0a}
-.weight-card{background:#eae4d8;border:0}
-.label{font-size:12px;color:var(--muted);font-weight:650;letter-spacing:.04em}
-.bigweight{font-size:38px;font-weight:750;letter-spacing:-.05em;margin:6px 0 0}
-.sub{font-size:12px;color:var(--muted);margin-top:3px}
-h2{font-size:16px;margin:0 0 15px}
-input{width:100%;border:1px solid var(--line);background:#fff;border-radius:13px;padding:14px;font-size:18px;color:var(--ink);outline:none}
-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px #b39a7020}
-.row{display:flex;gap:10px;align-items:center}
-.row>*{flex:1}
-button{border:0;border-radius:13px;padding:13px 15px;background:var(--green);color:white;font-weight:700;font-size:14px;cursor:pointer}
-button.secondary{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
-button:active{transform:scale(.99)}
-.segment{display:flex;background:var(--soft);padding:4px;border-radius:13px;gap:4px}
-.segment button{flex:1;background:transparent;color:var(--muted);padding:11px 8px}
-.segment button.active{background:#fff;color:var(--ink);box-shadow:0 1px 5px #00000012}
-.result{background:#e8eee5;border:0}
-.total{font-size:33px;font-weight:750;letter-spacing:-.04em;color:var(--green);margin:4px 0 14px}
-.foodline{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid #d6dfd2}
-.foodline strong{font-size:20px;font-variant-numeric:tabular-nums}
-.foodname{display:flex;gap:9px;align-items:center;font-weight:650}
-.dot{width:10px;height:10px;border-radius:50%;background:#ad7959}.dot.fruit{background:#7b966c}
-.smallgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.mini{background:var(--soft);padding:13px;border-radius:14px}
-.mini strong{display:block;font-size:18px;margin-top:4px}
-.history{display:flex;flex-direction:column;gap:0}
-.history-item{display:flex;justify-content:space-between;padding:11px 0;border-top:1px solid var(--line);font-size:14px}
-.history-item span:last-child{font-weight:700;font-variant-numeric:tabular-nums}
-.note{font-size:11px;line-height:1.5;color:var(--muted);margin:15px 3px}
-footer{text-align:center;font-size:11px;color:var(--muted);padding-top:8px}
-.hidden{display:none}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f0e8">
+
+  <title>Suki – BARF Rechner</title>
+
+  <!-- App-Icon -->
+  <link rel="apple-touch-icon" href="658CA407-13BF-4EBA-B7C4-C5722040AA3B.png">
+  <link rel="icon" type="image/png" href="658CA407-13BF-4EBA-B7C4-C5722040AA3B.png">
+
+  <style>
+    :root {
+      --background: #f5f0e8;
+      --card: #fffdf9;
+      --text: #39352f;
+      --muted: #898176;
+      --accent: #a58b68;
+      --accent-dark: #806849;
+      --border: #e9e0d4;
+      --soft: #eee7dc;
+      --danger: #b65e52;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      margin: auto;
+      padding: 24px 16px 50px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      color: var(--accent-dark);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-family: Georgia, serif;
+      font-size: 34px;
+      font-weight: 500;
+      margin: 8px 0;
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 16px rgba(70, 55, 35, 0.035);
+    }
+
+    .card h2 {
+      font-family: Georgia, serif;
+      font-size: 21px;
+      font-weight: 500;
+      margin: 0 0 16px;
+    }
+
+    .label {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    input, select {
+      width: 100%;
+      min-height: 48px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: #fff;
+      color: var(--text);
+      padding: 0 13px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--accent);
+    }
+
+    .input-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: end;
+    }
+
+    button {
+      border: 0;
+      border-radius: 11px;
+      padding: 14px 18px;
+      min-height: 48px;
+      background: var(--accent);
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .secondary-button {
+      background: var(--soft);
+      color: var(--text);
+    }
+
+    .delete-button {
+      background: transparent;
+      color: var(--danger);
+      padding: 5px 8px;
+      min-height: auto;
+      font-size: 12px;
+    }
+
+    .weight-display {
+      margin-top: 15px;
+      padding: 16px;
+      background: var(--soft);
+      border-radius: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .weight-display span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .weight-display strong {
+      font-family: Georgia, serif;
+      font-size: 25px;
+      font-weight: 500;
+    }
+
+    .meal-select {
+      margin-bottom: 18px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .result-box {
+      background: var(--soft);
+      border-radius: 14px;
+      padding: 16px 12px;
+    }
+
+    .result-box .result-label {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .result-box strong {
+      display: block;
+      font-family: Georgia, serif;
+      font-size: 27px;
+      font-weight: 500;
+    }
+
+    .result-box small {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .total-box {
+      background: #e9dfd0;
+      border-radius: 14px;
+      padding: 17px;
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .total-box span {
+      font-size: 13px;
+      color: var(--accent-dark);
+    }
+
+    .total-box strong {
+      font-family: Georgia, serif;
+      font-size: 25px;
+      font-weight: 500;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+      margin: 14px 2px 0;
+    }
+
+    .history-entry {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .history-entry:last-child {
+      border-bottom: 0;
+    }
+
+    .history-date {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .history-weight {
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 3px;
+    }
+
+    .empty {
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+      padding: 15px 0;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 25px;
+    }
+
+    @media (max-width: 390px) {
+      .container {
+        padding: 20px 12px 40px;
+      }
+
+      .card {
+        padding: 17px;
+      }
+
+      .result-box strong {
+        font-size: 24px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<main>
-<header>
-  <div><div class="kicker">Dein persönlicher Futterplan</div><h1>Aussie BARF-Dashboard</h1></div>
-  <div class="pill">WELPEN-TRACKER</div>
-</header>
+  <main class="container">
 
-<section class="card weight-card">
-  <div class="label">LETZTES GESPEICHERTES GEWICHT</div>
-  <div class="bigweight" id="lastWeight">5,6 kg</div>
-  <div class="sub" id="lastDate">Startgewicht · 16.11.2026</div>
-</section>
+    <header>
+      <div class="eyebrow">Sukis Ernährung</div>
+      <h1>BARF Rechner</h1>
+      <p>Gewicht, Tagesration und Mahlzeiten im Überblick</p>
+    </header>
 
-<section class="card">
-  <h2>Gewicht aktualisieren</h2>
-  <div class="row">
-    <div><div class="label" style="margin-bottom:7px">NEUES GEWICHT IN KG</div><input id="weightInput" type="number" min="0.1" step="0.1" inputmode="decimal" placeholder="z. B. 6,0"></div>
-    <div style="flex:0 0 104px;padding-top:20px"><button id="saveWeight" style="width:100%">Speichern</button></div>
-  </div>
-  <div class="sub" id="saveMessage" aria-live="polite"></div>
-</section>
+    <section class="card">
+      <h2>Aktuelles Gewicht</h2>
 
-<section class="card">
-  <h2>Fütterungen pro Tag</h2>
-  <div class="segment" role="group" aria-label="Mahlzeiten pro Tag">
-    <button data-meals="3">3 × täglich</button><button data-meals="4" class="active">4 × täglich</button>
-  </div>
-</section>
+      <label class="label" for="weightInput">Gewicht in Kilogramm</label>
 
-<section class="card result">
-  <div class="label" style="color:#65755f">DEINE PORTION PRO FÜTTERUNG</div>
-  <div class="total" id="portionTotal">126,0 g</div>
-  <div class="foodline"><div class="foodname"><span class="dot"></span>Fleisch</div><strong id="meatPortion">98,0 g</strong></div>
-  <div class="foodline"><div class="foodname"><span class="dot fruit"></span>Obst</div><strong id="fruitPortion">28,0 g</strong></div>
-</section>
+      <div class="input-row">
+        <input
+          id="weightInput"
+          type="number"
+          min="0.1"
+          step="0.1"
+          placeholder="z. B. 5,6"
+        >
+        <button onclick="saveWeight()">Speichern</button>
+      </div>
 
-<section class="card">
-  <h2>Gesamtmenge pro Tag</h2>
-  <div class="smallgrid">
-    <div class="mini"><div class="label">FLEISCH · 7 %</div><strong id="meatDay">392 g</strong></div>
-    <div class="mini"><div class="label">OBST · 2 %</div><strong id="fruitDay">112 g</strong></div>
-  </div>
-</section>
+      <div class="weight-display">
+        <span>Letztes gespeichertes Gewicht</span>
+        <strong id="currentWeight">5,6 kg</strong>
+      </div>
+    </section>
 
-<section class="card">
-  <h2>Gewichtsverlauf</h2>
-  <div class="history" id="history"></div>
-  <button class="secondary" id="clearHistory" style="width:100%;margin-top:13px">Verlauf zurücksetzen</button>
-</section>
+    <section class="card">
+      <h2>Mahlzeiten & Tagesration</h2>
 
-<p class="note">Rechenbasis: täglich 7 % des Körpergewichts als Fleisch und 2 % als Obst. Die Tagesmenge wird durch die gewählte Anzahl der Mahlzeiten geteilt. Diese Werte bilden nur deine eingegebenen Rechenvorgaben ab und bestätigen keine bedarfsgerechte oder vollständige Welpenration. Bitte die Ration wegen des Wachstums mit einer tierärztlichen Ernährungsberatung abstimmen.</p>
-<footer>Deine Eingaben werden lokal in diesem Browser gespeichert.</footer>
-</main>
-<script>
-const KEY='aussieBarfDashboardV1';
-const fmt=n=>n.toLocaleString('de-DE',{minimumFractionDigits:1,maximumFractionDigits:1});
-const dateFmt=s=>new Date(s+'T12:00:00').toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'});
-const today=()=>new Date().toISOString().slice(0,10);
-let data;
-try{data=JSON.parse(localStorage.getItem(KEY))}catch(e){}
-if(!data || !Array.isArray(data.history)){
-  data={weight:5.6,meals:4,history:[{weight:5.6,date:'2026-11-16'}]};
-}
-const persist=()=>localStorage.setItem(KEY,JSON.stringify(data));
-const el=id=>document.getElementById(id);
-function render(){
-  const w=Number(data.weight)||0, meals=Number(data.meals)||4;
-  el('lastWeight').textContent=fmt(w)+' kg';
-  const latest=data.history[data.history.length-1];
-  el('lastDate').textContent=latest?'Zuletzt gespeichert · '+dateFmt(latest.date):'Noch kein Gewicht gespeichert';
-  const meat=w*1000*.07, fruit=w*1000*.02;
-  el('meatPortion').textContent=fmt(meat/meals)+' g';
-  el('fruitPortion').textContent=fmt(fruit/meals)+' g';
-  el('portionTotal').textContent=fmt((meat+fruit)/meals)+' g';
-  el('meatDay').textContent=fmt(meat)+' g';
-  el('fruitDay').textContent=fmt(fruit)+' g';
-  document.querySelectorAll('[data-meals]').forEach(b=>b.classList.toggle('active',Number(b.dataset.meals)===meals));
-  el('history').innerHTML=data.history.slice().reverse().map(h=>`<div class="history-item"><span>${dateFmt(h.date)}</span><span>${fmt(h.weight)} kg</span></div>`).join('')||'<div class="sub">Noch keine Einträge.</div>';
-}
-el('saveWeight').addEventListener('click',()=>{
-  const w=Number(el('weightInput').value.replace(',','.'));
-  if(!Number.isFinite(w)||w<=0){el('saveMessage').textContent='Bitte ein gültiges Gewicht eingeben.';return}
-  data.weight=Math.round(w*100)/100;
-  data.history.push({weight:data.weight,date:today()});
-  persist();render();el('weightInput').value='';el('saveMessage').textContent='Gewicht gespeichert.';
-});
-document.querySelectorAll('[data-meals]').forEach(b=>b.addEventListener('click',()=>{
-  data.meals=Number(b.dataset.meals);persist();render();
-}));
-el('clearHistory').addEventListener('click',()=>{
-  if(!confirm('Möchtest du den Gewichtsverlauf wirklich zurücksetzen?'))return;
-  data.history=[];persist();render();
-});
-persist();render();
-</script>
+      <div class="meal-select">
+        <label class="label" for="mealCount">Mahlzeiten pro Tag</label>
+        <select id="mealCount" onchange="updateCalculation()">
+          <option value="2">2 Mahlzeiten</option>
+          <option value="3">3 Mahlzeiten</option>
+          <option value="4" selected>4 Mahlzeiten</option>
+          <option value="5">5 Mahlzeiten</option>
+          <option value="6">6 Mahlzeiten</option>
+        </select>
+      </div>
+
+      <div class="result-grid">
+        <div class="result-box">
+          <div class="result-label">Fleisch pro Mahlzeit</div>
+          <strong id="meatPerMeal">98 g</strong>
+          <small>7 % des Körpergewichts täglich</small>
+        </div>
+
+        <div class="result-box">
+          <div class="result-label">Obst pro Mahlzeit</div>
+          <strong id="fruitPerMeal">28 g</strong>
+          <small>2 % des Körpergewichts täglich</small>
+        </div>
+      </div>
+
+      <div class="total-box">
+        <span>Gesamte Tagesmenge</span>
+        <strong id="dailyTotal">504 g</strong>
+      </div>
+
+      <p class="note">
+        Die Werte beruhen auf den hinterlegten Rechenannahmen:
+        7 % des Körpergewichts für Fleisch und 2 % für Obst.
+        Die Mengen werden auf die gewählte Anzahl der Mahlzeiten verteilt.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Gewichtsverlauf</h2>
+      <div id="historyList"></div>
+      <button
+        class="secondary-button"
+        style="width:100%; margin-top:12px;"
+        onclick="clearHistory()"
+      >
+        Gewichtsverlauf löschen
+      </button>
+    </section>
+
+    <div class="footer">
+      Suki · BARF Rechner
+    </div>
+
+  </main>
+
+  <script>
+    const DEFAULT_WEIGHT = 5.6;
+
+    let weight = Number(localStorage.getItem("sukiWeight")) || DEFAULT_WEIGHT;
+
+    let history = JSON.parse(
+      localStorage.getItem("sukiWeightHistory") || "[]"
+    );
+
+    function formatGrams(value) {
+      return Math.round(value) + " g";
+    }
+
+    function formatWeight(value) {
+      return value.toLocaleString("de-DE", {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 2
+      }) + " kg";
+    }
+
+    function saveWeight() {
+      const input = document.getElementById("weightInput");
+      const newWeight = Number(input.value.replace(",", "."));
+
+      if (!Number.isFinite(newWeight) || newWeight <= 0) {
+        alert("Bitte gib ein gültiges Gewicht ein.");
+        return;
+      }
+
+      weight = newWeight;
+
+      localStorage.setItem("sukiWeight", String(weight));
+
+      const today = new Date().toLocaleDateString("de-DE");
+
+      history.unshift({
+        weight: weight,
+        date: today,
+        timestamp: Date.now()
+      });
+
+      localStorage.setItem(
+        "sukiWeightHistory",
+        JSON.stringify(history)
+      );
+
+      input.value = "";
+
+      updateDisplay();
+      renderHistory();
+    }
+
+    function updateCalculation() {
+      const meals = Number(
+        document.getElementById("mealCount").value
+      );
+
+      const dailyMeat = weight * 1000 * 0.07;
+      const dailyFruit = weight * 1000 * 0.02;
+
+      const meatPerMeal = dailyMeat / meals;
+      const fruitPerMeal = dailyFruit / meals;
+      const dailyTotal = dailyMeat + dailyFruit;
+
+      document.getElementById("meatPerMeal").textContent =
+        formatGrams(meatPerMeal / 1);
+
+      document.getElementById("fruitPerMeal").textContent =
+        formatGrams(fruitPerMeal / 1);
+
+      document.getElementById("dailyTotal").textContent =
+        formatGrams(dailyTotal);
+    }
+
+    function updateDisplay() {
+      document.getElementById("currentWeight").textContent =
+        formatWeight(weight);
+
+      updateCalculation();
+    }
+
+    function renderHistory() {
+      const list = document.getElementById("historyList");
+
+      if (history.length === 0) {
+        list.innerHTML =
+          '<div class="empty">Noch keine Gewichtseinträge vorhanden.</div>';
+        return;
+      }
+
+      list.innerHTML = history.map((entry, index) => `
+        <div class="history-entry">
+          <div>
+            <div class="history-date">${escapeHTML(entry.date)}</div>
+            <div class="history-weight">${formatWeight(entry.weight)}</div>
+          </div>
+          <button
+            class="delete-button"
+            onclick="deleteEntry(${index})"
+          >
+            Löschen
+          </button>
+        </div>
+      `).join("");
+    }
+
+    function deleteEntry(index) {
+      history.splice(index, 1);
+
+      localStorage.setItem(
+        "sukiWeightHistory",
+        JSON.stringify(history)
+      );
+
+      renderHistory();
+    }
+
+    function clearHistory() {
+      if (!confirm("Möchtest du wirklich den gesamten Gewichtsverlauf löschen?")) {
+        return;
+      }
+
+      history = [];
+
+      localStorage.setItem(
+        "sukiWeightHistory",
+        JSON.stringify(history)
+      );
+
+      renderHistory();
+    }
+
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[char]);
+    }
+
+    // Beim Start gespeicherte Daten anzeigen
+    updateDisplay();
+    renderHistory();
+  </script>
 </body>
 </html>
